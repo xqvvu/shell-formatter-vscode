@@ -24,7 +24,7 @@ export function getShfmtPlatform(): ShfmtPlatform {
       return "windows";
     default:
       throw new Error(
-        `Unsupported platform "${process.platform}". Configure "shellFormatter.executablePath" to use a custom shfmt.`,
+        `Unsupported platform "${process.platform}". Configure "shellTidy.executablePath" to use a custom shfmt.`,
       );
   }
 }
@@ -41,7 +41,7 @@ export function getShfmtArch(): ShfmtArch {
       return "386";
     default:
       throw new Error(
-        `Unsupported architecture "${process.arch}". Configure "shellFormatter.executablePath" to use a custom shfmt.`,
+        `Unsupported architecture "${process.arch}". Configure "shellTidy.executablePath" to use a custom shfmt.`,
       );
   }
 }

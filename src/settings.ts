@@ -1,6 +1,6 @@
 import * as vscode from "vscode";
 
-export const EXT_NAMESPACE = "shellFormatter";
+export const EXT_NAMESPACE = "shellTidy";
 
 export type LogLevel = "info" | "debug";
 

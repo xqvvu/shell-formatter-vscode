@@ -1,6 +1,6 @@
 FROM alpine:3.20
 
-LABEL org.opencontainers.image.title="shell-formatter fixture"
+LABEL org.opencontainers.image.title="shell-tidy fixture"
 ENV APP_HOME=/work APP_ENV=dev
 
 WORKDIR ${APP_HOME}

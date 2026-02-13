@@ -11,7 +11,7 @@ import { installShfmtManagedBinary } from "@/shfmt-installer";
  * This is mainly for diagnostics/telemetry/logging so we can tell *which* shfmt
  * is being used when formatting.
  *
- * - `"user"`: explicitly configured via `shellFormatter.executablePath` (after
+ * - `"user"`: explicitly configured via `shellTidy.executablePath` (after
  *   variable substitution) and verified to be executable.
  * - `"path"`: discovered on `PATH` (e.g. system package manager install).
  * - `"managed"`: the extension-managed binary downloaded into the extension's
@@ -54,7 +54,7 @@ export class ShfmtManager {
       const resolved = substituteVariables(executablePathSetting);
       if (!(await isExecutable(resolved))) {
         throw new Error(
-          `Configured "shellFormatter.executablePath" is not executable or does not exist: ${resolved}`,
+          `Configured "shellTidy.executablePath" is not executable or does not exist: ${resolved}`,
         );
       }
       return { source: "user", executablePath: resolved, version };
@@ -70,7 +70,7 @@ export class ShfmtManager {
     if (!exists) {
       if (!autoDownload) {
         throw new Error(
-          `shfmt is not available. Enable "shellFormatter.autoDownload" or configure "shellFormatter.executablePath".`,
+          `shfmt is not available. Enable "shellTidy.autoDownload" or configure "shellTidy.executablePath".`,
         );
       }
       await this.ensureManagedBinaryInstalled(version);

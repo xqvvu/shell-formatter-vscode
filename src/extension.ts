@@ -2,7 +2,7 @@ import * as vscode from "vscode";
 import { ShellFormatProvider } from "@/format-provider";
 import { DEFAULT_SHFMT_VERSION, EXT_NAMESPACE, readSettings } from "@/settings";
 import { ShfmtManager } from "@/shfmt-manager";
-import packageJson from "../package.json";
+import packageJson from "~packageJson";
 
 const OUTPUT_CHANNEL_NAME = packageJson.displayName;
 
@@ -97,7 +97,7 @@ export function activate(context: vscode.ExtensionContext) {
 
   context.subscriptions.push(
     vscode.commands.registerCommand(
-      "shellFormatter.downloadShfmt",
+      "shellTidy.downloadShfmt",
       async () => {
         const s = getRuntimeSettings();
         output.show(true);
@@ -120,7 +120,7 @@ export function activate(context: vscode.ExtensionContext) {
 
   context.subscriptions.push(
     vscode.commands.registerCommand(
-      "shellFormatter.showShfmtInfo",
+      "shellTidy.showShfmtInfo",
       async () => {
         output.show(true);
         const resolved = await resolveAndLogShfmtInfo();
@@ -130,7 +130,7 @@ export function activate(context: vscode.ExtensionContext) {
           );
         } else {
           void vscode.window.showErrorMessage(
-            `Unable to resolve shfmt. Configure "shellFormatter.executablePath" or enable auto-download. See "${OUTPUT_CHANNEL_NAME}" output for details.`,
+            `Unable to resolve shfmt. Configure "shellTidy.executablePath" or enable auto-download. See "${OUTPUT_CHANNEL_NAME}" output for details.`,
           );
         }
       },

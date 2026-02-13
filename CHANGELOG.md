@@ -1,11 +1,17 @@
 # shell-tidy-vscode
 
+## 1.0.1
+
+### Patch Changes
+
+- Align remaining extension command IDs, configuration keys, and docs with the `shellTidy.*` namespace for consistent Shell Tidy branding.
+
 ## 1.0.0
 
 ### Major Changes
 
 - Release the first stable major version of Shell Tidy.
-- Breaking change: rename the extension identifier from `xqvvu.shell-formatter-vscode` to `xqvvu.shell-tidy-vscode`. If you configured a default formatter, update it to the new ID.
+- Breaking change: the extension identifier is now `xqvvu.shell-tidy-vscode`. If you configured a default formatter, update it to this ID.
 - Improvements:
   - Unify user-facing branding to **Shell Tidy** across command titles, Output channel naming, and documentation.
   - Refresh package metadata and repository links to the new project name.

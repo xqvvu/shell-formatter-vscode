@@ -2,7 +2,7 @@
   "name": "shell-tidy-vscode",
   "displayName": "Shell Tidy",
   "publisher": "xqvvu",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Format shell and shell-like command text files with shfmt",
   "main": "dist/index.cjs",
   "type": "module",
@@ -49,11 +49,11 @@
   "contributes": {
     "commands": [
       {
-        "command": "shellFormatter.downloadShfmt",
+        "command": "shellTidy.downloadShfmt",
         "title": "Shell Tidy: Download shfmt"
       },
       {
-        "command": "shellFormatter.showShfmtInfo",
+        "command": "shellTidy.showShfmtInfo",
         "title": "Shell Tidy: Show shfmt Info"
       }
     ],
@@ -142,7 +142,7 @@
       "type": "object",
       "title": "Shell Tidy",
       "properties": {
-        "shellFormatter.executablePath": {
+        "shellTidy.executablePath": {
           "type": [
             "string",
             "null"
@@ -150,12 +150,12 @@
           "default": null,
           "markdownDescription": "Path to a `shfmt` executable. If set, Shell Tidy will use this binary instead of auto-downloading."
         },
-        "shellFormatter.autoDownload": {
+        "shellTidy.autoDownload": {
           "type": "boolean",
           "default": true,
-          "markdownDescription": "Automatically download a managed `shfmt` binary into VS Code global storage when no `shfmt` is found on PATH and `shellFormatter.executablePath` is not set."
+          "markdownDescription": "Automatically download a managed `shfmt` binary into VS Code global storage when no `shfmt` is found on PATH and `shellTidy.executablePath` is not set."
         },
-        "shellFormatter.shfmt.version": {
+        "shellTidy.shfmt.version": {
           "type": [
             "string",
             "null"
@@ -163,7 +163,7 @@
           "default": null,
           "markdownDescription": "Override the managed `shfmt` version (e.g. `3.12.0`). If null, the extension's built-in version is used."
         },
-        "shellFormatter.args": {
+        "shellTidy.args": {
           "type": "array",
           "default": [],
           "items": {
@@ -171,7 +171,7 @@
           },
           "markdownDescription": "Extra arguments passed to `shfmt`."
         },
-        "shellFormatter.enabledLanguages": {
+        "shellTidy.enabledLanguages": {
           "type": "array",
           "default": [
             "shellscript",
@@ -190,7 +190,7 @@
           },
           "markdownDescription": "Language IDs for which Shell Tidy registers a formatter."
         },
-        "shellFormatter.logLevel": {
+        "shellTidy.logLevel": {
           "type": "string",
           "enum": [
             "info",
@@ -208,7 +208,7 @@
   },
   "author": {
     "email": "whoeverimf5@gmail.com",
-    "name": "Ryo5",
+    "name": "Ryo",
     "url": "https://github.com/xqvvu"
   },
   "repository": {

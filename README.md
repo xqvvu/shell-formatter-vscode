@@ -48,7 +48,7 @@ code --install-extension shell-tidy.vsix
 
 - Multi-file formatting powered by `shfmt`.
 - Smart `shfmt` resolution:
-  - uses `shellFormatter.executablePath` when set
+  - uses `shellTidy.executablePath` when set
   - falls back to `shfmt` on your `PATH`
   - auto-downloads a managed `shfmt` binary (optional)
 - Honors editor indentation (`editor.tabSize`) unless `-i` is already set in args.
@@ -92,30 +92,30 @@ Optional: set Shell Tidy as default for shellscript:
 
 | Command | ID | Description |
 | --- | --- | --- |
-| `Shell Tidy: Download shfmt` | `shellFormatter.downloadShfmt` | Download managed `shfmt` for current platform |
-| `Shell Tidy: Show shfmt Info` | `shellFormatter.showShfmtInfo` | Show current `shfmt` source/path/version |
+| `Shell Tidy: Download shfmt` | `shellTidy.downloadShfmt` | Download managed `shfmt` for current platform |
+| `Shell Tidy: Show shfmt Info` | `shellTidy.showShfmtInfo` | Show current `shfmt` source/path/version |
 
 ## Configuration
 
 | Setting | Type | Default | Description |
 | --- | --- | --- | --- |
-| `shellFormatter.executablePath` | `string \| null` | `null` | Absolute path to `shfmt`. Supports `${workspaceFolder}` / `${workspaceRoot}` |
-| `shellFormatter.autoDownload` | `boolean` | `true` | Auto-download managed `shfmt` when not found |
-| `shellFormatter.shfmt.version` | `string \| null` | `null` | Override managed `shfmt` version (built-in default is `3.12.0`) |
-| `shellFormatter.args` | `string[]` | `[]` | Extra args passed to `shfmt` |
-| `shellFormatter.enabledLanguages` | `string[]` | Built-in language list | Language IDs to register formatter for |
-| `shellFormatter.logLevel` | `"info" \| "debug"` | `"info"` | Controls Output panel verbosity |
+| `shellTidy.executablePath` | `string \| null` | `null` | Absolute path to `shfmt`. Supports `${workspaceFolder}` / `${workspaceRoot}` |
+| `shellTidy.autoDownload` | `boolean` | `true` | Auto-download managed `shfmt` when not found |
+| `shellTidy.shfmt.version` | `string \| null` | `null` | Override managed `shfmt` version (built-in default is `3.12.0`) |
+| `shellTidy.args` | `string[]` | `[]` | Extra args passed to `shfmt` |
+| `shellTidy.enabledLanguages` | `string[]` | Built-in language list | Language IDs to register formatter for |
+| `shellTidy.logLevel` | `"info" \| "debug"` | `"info"` | Controls Output panel verbosity |
 
 Example:
 
 ```json
 {
-  "shellFormatter.autoDownload": true,
-  "shellFormatter.executablePath": null,
-  "shellFormatter.shfmt.version": null,
-  "shellFormatter.args": ["-mn"],
-  "shellFormatter.logLevel": "info",
-  "shellFormatter.enabledLanguages": [
+  "shellTidy.autoDownload": true,
+  "shellTidy.executablePath": null,
+  "shellTidy.shfmt.version": null,
+  "shellTidy.args": ["-mn"],
+  "shellTidy.logLevel": "info",
+  "shellTidy.enabledLanguages": [
     "shellscript",
     "dockerfile",
     "dotenv",
@@ -134,17 +134,17 @@ Example:
 
 Resolution order:
 
-1. `shellFormatter.executablePath`
+1. `shellTidy.executablePath`
 2. `shfmt` from system `PATH`
-3. Managed `shfmt` binary downloaded by extension (`shellFormatter.autoDownload: true`)
+3. Managed `shfmt` binary downloaded by extension (`shellTidy.autoDownload: true`)
 
 If all three fail, Shell Tidy reports an error and provides diagnostics/output logs.
 
 ## Troubleshooting
 
-- Set `shellFormatter.logLevel` to `debug`.
+- Set `shellTidy.logLevel` to `debug`.
 - Open `View -> Output -> Shell Tidy`.
-- If your network blocks GitHub downloads, install `shfmt` manually and set `shellFormatter.executablePath`.
+- If your network blocks GitHub downloads, install `shfmt` manually and set `shellTidy.executablePath`.
 
 ## Links
 
