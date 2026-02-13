@@ -1,0 +1,3 @@
+az   group   create --name demo-rg   --location westus2
+az storage account create   --resource-group demo-rg --name demostorage001 --sku Standard_LRS
+az storage account show --name demostorage001 --query  "primaryEndpoints.blob"

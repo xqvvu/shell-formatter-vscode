@@ -1,5 +1,6 @@
 pre-commit:
   parallel: true
+
   jobs:
-    - run: pnpm exec biome check --write --no-errors-on-unmatched {staged_files}
-      glob: '*.{js,ts,json,jsonc}'
+    - glob: '*.{js,ts,json,jsonc}'
+      run: pnpm exec biome check --write --no-errors-on-unmatched {staged_files}

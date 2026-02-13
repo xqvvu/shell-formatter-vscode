@@ -1,0 +1,7 @@
+# IPv4
+127.0.0.1 localhost localhost.localdomain
+192.168.50.10 db.internal
+
+# IPv6
+::1 localhost ip6-localhost ip6-loopback
+fe80::1%lo0 router.local

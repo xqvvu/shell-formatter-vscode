@@ -4,13 +4,16 @@
     "outDir": "./dist",
     "baseUrl": "./",
     "paths": {
-      "@/*": ["src/"]
+      "@/*": ["src/*"],
+      "~tests/*": ["tests/*"]
     },
 
     "module": "esnext",
-    "target": "esnext",
+    "target": "es2022",
     "moduleResolution": "bundler",
     "noEmit": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
 
     "strict": true,
     "jsx": "react-jsx",
@@ -19,7 +22,5 @@
     "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",
     "skipLibCheck": true
-  },
-
-  "include": ["src"]
+  }
 }

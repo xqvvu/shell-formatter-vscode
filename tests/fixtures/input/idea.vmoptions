@@ -1,0 +1,7 @@
+-ea
+  -server
+-Xms512m
+  -Xmx2g
+-XX:+UseG1GC
+-Dfile.encoding=UTF-8
+ -Djava.net.preferIPv4Stack=true

@@ -7,4 +7,7 @@ export default defineConfig({
       projects: ["./tsconfig.json"],
     }),
   ],
+  test: {
+    include: ["src/**/*.{test,spec}.ts", "tests/**/*.{test,spec}.ts"],
+  },
 });

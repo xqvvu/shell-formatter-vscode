@@ -1,37 +1,245 @@
 {
   "name": "shell-formatter-vscode",
+  "displayName": "Shell Formatter",
+  "publisher": "xqvvu",
   "version": "0.1.0-alpha.1",
   "description": "A formatter for shell scripts, Dockerfile, gitignore, dotenv, /etc/hosts, jvmoptions, and other file types",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "dist/index.cjs",
   "type": "module",
-  "scripts": {
-    "dev": "tsx src/index.ts",
-    "build": "tsdown",
-    "build:watch": "tsdown --watch",
-    "check:biome": "biome check --no-errors-on-unmatched --write .",
-    "check:type": "tsc",
-    "postinstall": "lefthook install"
+  "categories": [
+    "Formatters"
+  ],
+  "activationEvents": [
+    "onLanguage:shellscript",
+    "onLanguage:dotenv",
+    "onLanguage:dockerfile",
+    "onLanguage:ignore",
+    "onLanguage:hosts",
+    "onLanguage:jvmoptions",
+    "onLanguage:properties",
+    "onLanguage:spring-boot-properties",
+    "onLanguage:azcli",
+    "onLanguage:bats",
+    "onCommand:shellFormatter.downloadShfmt",
+    "onCommand:shellFormatter.showShfmtInfo"
+  ],
+  "capabilities": {
+    "documentFormattingProvider": "true"
   },
   "keywords": [
     "formatter",
-    "shellscript"
+    "shell",
+    "docker",
+    "shellscript",
+    "format",
+    "bash",
+    "dockerfile",
+    "properties",
+    "formatter",
+    "beautify",
+    "dotenv",
+    "hosts",
+    "jvmoptions",
+    "vmoptions",
+    "bashrc",
+    "zshrc",
+    "azcli",
+    "azure cli tool",
+    "bats"
   ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "shellFormatter.downloadShfmt",
+        "title": "Shell Formatter: Download shfmt"
+      },
+      {
+        "command": "shellFormatter.showShfmtInfo",
+        "title": "Shell Formatter: Show shfmt Info"
+      }
+    ],
+    "languages": [
+      {
+        "id": "shellscript"
+      },
+      {
+        "id": "dockerfile",
+        "aliases": [
+          "docker",
+          "Dockerfile"
+        ],
+        "filenamePatterns": [
+          "Dockerfile",
+          "Dockerfile.*",
+          "*.dockerfile"
+        ]
+      },
+      {
+        "id": "ignore",
+        "aliases": [
+          "gitignore",
+          "dockerignore"
+        ],
+        "filenames": [
+          ".dockerignore",
+          ".gitignore"
+        ]
+      },
+      {
+        "id": "dotenv",
+        "aliases": [
+          "env"
+        ],
+        "filenamePatterns": [
+          ".env.*"
+        ],
+        "filenames": [
+          "env",
+          ".env"
+        ]
+      },
+      {
+        "id": "jvmoptions",
+        "aliases": [
+          "vmoptions"
+        ],
+        "extensions": [
+          ".vmoptions"
+        ],
+        "filenames": [
+          "jvm.options"
+        ]
+      },
+      {
+        "id": "hosts",
+        "filenames": [
+          "hosts"
+        ]
+      },
+      {
+        "id": "properties",
+        "aliases": [
+          "Properties",
+          "spring-boot-properties"
+        ],
+        "extensions": [
+          ".properties"
+        ]
+      },
+      {
+        "id": "azcli",
+        "extensions": [
+          ".azcli"
+        ]
+      },
+      {
+        "id": "bats",
+        "extensions": [
+          ".bats"
+        ]
+      }
+    ],
+    "configuration": {
+      "type": "object",
+      "title": "Shell Formatter",
+      "properties": {
+        "shellFormatter.executablePath": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null,
+          "markdownDescription": "Path to a `shfmt` executable. If set, Shell Format will use this binary instead of auto-downloading."
+        },
+        "shellFormatter.autoDownload": {
+          "type": "boolean",
+          "default": true,
+          "markdownDescription": "Automatically download a managed `shfmt` binary into VS Code global storage when no `shfmt` is found on PATH and `shellFormatter.executablePath` is not set."
+        },
+        "shellFormatter.shfmt.version": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null,
+          "markdownDescription": "Override the managed `shfmt` version (e.g. `3.12.0`). If null, the extension's built-in version is used."
+        },
+        "shellFormatter.args": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "markdownDescription": "Extra arguments passed to `shfmt`."
+        },
+        "shellFormatter.enabledLanguages": {
+          "type": "array",
+          "default": [
+            "shellscript",
+            "dockerfile",
+            "dotenv",
+            "ignore",
+            "hosts",
+            "jvmoptions",
+            "properties",
+            "spring-boot-properties",
+            "azcli",
+            "bats"
+          ],
+          "items": {
+            "type": "string"
+          },
+          "markdownDescription": "Language IDs for which Shell Format registers a formatter."
+        },
+        "shellFormatter.logLevel": {
+          "type": "string",
+          "enum": [
+            "info",
+            "debug"
+          ],
+          "default": "info",
+          "markdownDescription": "Controls how much Shell Format logs to the Output panel."
+        }
+      }
+    }
+  },
+  "vsce": {
+    "dependencies": false,
+    "skipLicense": true
+  },
   "author": {
     "email": "whoeverimf5@gmail.com",
     "name": "Ryo",
     "url": "https://github.com/xqvvu"
   },
+  "repository": "github:xqvvu/shell-formatter-vscode",
+  "homepage": "https://github.com/xqvvu/shell-formatter-vscode#readme",
+  "readme": "https://github.com/xqvvu/shell-formatter-vscode#readme",
+  "bugs": "https://github.com/xqvvu/shell-formatter-vscode/issues",
   "license": "MIT",
   "packageManager": "pnpm@10.29.3",
-  "dependencies": {
-    "es-toolkit": "^1.44.0"
+  "engines": {
+    "node": ">=22",
+    "pnpm": "10.x",
+    "vscode": "^1.80.0"
+  },
+  "scripts": {
+    "dev": "tsx --tsconfig tsconfig.json src/extension.ts",
+    "build": "tsdown",
+    "build:watch": "tsdown --watch",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:fixtures:update": "tsx tests/scripts/update-fixtures.ts",
+    "check:biome": "biome check --no-errors-on-unmatched --write .",
+    "check:types": "tsc --noEmit",
+    "package": "pnpm run check:types",
+    "postinstall": "lefthook install"
   },
   "devDependencies": {
     "@biomejs/biome": "2.3.15",
     "@changesets/changelog-github": "0.5.2",
     "@changesets/cli": "^2.29.8",
-    "@types/node": "^24.10.13",
+    "@types/node": "^22.19.11",
     "@types/vscode": "^1.109.0",
     "@vscode/vsce": "3.7.1",
     "lefthook": "^2.1.1",

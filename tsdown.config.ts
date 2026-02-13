@@ -1,6 +1,17 @@
 import { defineConfig } from "tsdown";
 
 export default defineConfig({
-  entry: ["src/index.ts"],
-  dts: true,
+  entry: [
+    {
+      index: "src/extension.ts",
+    },
+  ],
+
+  format: "commonjs",
+  target: "node18",
+  inlineOnly: false,
+  sourcemap: true,
+  dts: false,
+
+  external: ["vscode"],
 });
