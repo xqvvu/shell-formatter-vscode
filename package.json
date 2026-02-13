@@ -19,9 +19,7 @@
     "onLanguage:properties",
     "onLanguage:spring-boot-properties",
     "onLanguage:azcli",
-    "onLanguage:bats",
-    "onCommand:shellFormatter.downloadShfmt",
-    "onCommand:shellFormatter.showShfmtInfo"
+    "onLanguage:bats"
   ],
   "capabilities": {
     "documentFormattingProvider": "true"
@@ -219,20 +217,19 @@
   "license": "MIT",
   "packageManager": "pnpm@10.29.3",
   "engines": {
-    "node": ">=22",
+    "node": "22.x",
     "pnpm": "10.x",
-    "vscode": "^1.80.0"
+    "vscode": "^1.109.0"
   },
   "scripts": {
-    "dev": "tsx --tsconfig tsconfig.json src/extension.ts",
     "build": "tsdown",
     "build:watch": "tsdown --watch",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:fixtures:update": "tsx tests/scripts/update-fixtures.ts",
     "check:biome": "biome check --no-errors-on-unmatched --write .",
     "check:types": "tsc --noEmit",
-    "package": "pnpm run check:types",
+    "prepackage": "pnpm run check:types && pnpm run build",
+    "package": "vsce package --out shell-formatter.vsix",
     "postinstall": "lefthook install"
   },
   "devDependencies": {
@@ -245,7 +242,6 @@
     "lefthook": "^2.1.1",
     "ovsx": "0.10.9",
     "tsdown": "^0.20.3",
-    "tsx": "^4.21.0",
     "typescript": "^5.9.3",
     "vite-tsconfig-paths": "^6.1.1",
     "vitest": "^4.0.18"

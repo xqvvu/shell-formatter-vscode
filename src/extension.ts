@@ -26,6 +26,24 @@ export function activate(context: vscode.ExtensionContext) {
     };
   };
 
+  const resolveAndLogShfmtInfo = async () => {
+    const s = getRuntimeSettings();
+    try {
+      const resolved = await shfmtManager.resolveShfmtExecutable({
+        version: s.version,
+        executablePathSetting: s.executablePathSetting,
+        autoDownload: s.autoDownload,
+      });
+      log(`shfmt version (requested): ${s.version}`);
+      log(`shfmt source: ${resolved.source}`);
+      log(`shfmt path: ${resolved.executablePath}`);
+      return resolved;
+    } catch (err: unknown) {
+      log(`Resolve shfmt failed: ${getErrorMessage(err)}`);
+      return null;
+    }
+  };
+
   const provider = new ShellFormatProvider(
     shfmtManager,
     diagnostics,
@@ -65,6 +83,7 @@ export function activate(context: vscode.ExtensionContext) {
   };
 
   register();
+  void resolveAndLogShfmtInfo();
   context.subscriptions.push(output, diagnostics);
 
   context.subscriptions.push(
@@ -102,22 +121,13 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.commands.registerCommand(
       "shellFormatter.showShfmtInfo",
       async () => {
-        const s = getRuntimeSettings();
         output.show(true);
-        try {
-          const resolved = await shfmtManager.resolveShfmtExecutable({
-            version: s.version,
-            executablePathSetting: s.executablePathSetting,
-            autoDownload: s.autoDownload,
-          });
-          log(`shfmt version (requested): ${s.version}`);
-          log(`shfmt source: ${resolved.source}`);
-          log(`shfmt path: ${resolved.executablePath}`);
+        const resolved = await resolveAndLogShfmtInfo();
+        if (resolved) {
           void vscode.window.showInformationMessage(
             `Shell Format shfmt: ${resolved.source} (${resolved.executablePath})`,
           );
-        } catch (err: unknown) {
-          log(`Resolve shfmt failed: ${getErrorMessage(err)}`);
+        } else {
           void vscode.window.showErrorMessage(
             `Unable to resolve shfmt. Configure "shellFormatter.executablePath" or enable auto-download. See "${OUTPUT_CHANNEL_NAME}" output for details.`,
           );

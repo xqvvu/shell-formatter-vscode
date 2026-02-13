@@ -5,6 +5,18 @@ import type * as vscode from "vscode";
 import { findExecutableOnPath, substituteVariables } from "@/path-utils";
 import { installShfmtManagedBinary } from "@/shfmt-installer";
 
+/**
+ * Where the `shfmt` executable was resolved from.
+ *
+ * This is mainly for diagnostics/telemetry/logging so we can tell *which* shfmt
+ * is being used when formatting.
+ *
+ * - `"user"`: explicitly configured via `shellFormatter.executablePath` (after
+ *   variable substitution) and verified to be executable.
+ * - `"path"`: discovered on `PATH` (e.g. system package manager install).
+ * - `"managed"`: the extension-managed binary downloaded into the extension's
+ *   global storage for the requested `version`.
+ */
 export type ShfmtSource = "user" | "path" | "managed";
 
 export interface ResolvedShfmt {

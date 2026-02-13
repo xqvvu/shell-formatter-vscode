@@ -1,1 +1,6 @@
-node_modules
+**
+!assets
+!LICENSE
+!dist/index.cjs
+!package.json
+!README.md
