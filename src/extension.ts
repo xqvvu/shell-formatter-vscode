@@ -96,45 +96,39 @@ export function activate(context: vscode.ExtensionContext) {
   );
 
   context.subscriptions.push(
-    vscode.commands.registerCommand(
-      "shellTidy.downloadShfmt",
-      async () => {
-        const s = getRuntimeSettings();
-        output.show(true);
-        log(`Ensuring managed shfmt ${s.version} is installed...`);
-        try {
-          await shfmtManager.ensureManagedBinaryInstalled(s.version);
-          log("Managed shfmt is installed.");
-          void vscode.window.showInformationMessage(
-            `shfmt ${s.version} installed for ${OUTPUT_CHANNEL_NAME}.`,
-          );
-        } catch (err: unknown) {
-          log(`Install failed: ${getErrorMessage(err)}`);
-          void vscode.window.showErrorMessage(
-            `Failed to install shfmt ${s.version}. See "${OUTPUT_CHANNEL_NAME}" output for details.`,
-          );
-        }
-      },
-    ),
+    vscode.commands.registerCommand("shellTidy.downloadShfmt", async () => {
+      const s = getRuntimeSettings();
+      output.show(true);
+      log(`Ensuring managed shfmt ${s.version} is installed...`);
+      try {
+        await shfmtManager.ensureManagedBinaryInstalled(s.version);
+        log("Managed shfmt is installed.");
+        void vscode.window.showInformationMessage(
+          `shfmt ${s.version} installed for ${OUTPUT_CHANNEL_NAME}.`,
+        );
+      } catch (err: unknown) {
+        log(`Install failed: ${getErrorMessage(err)}`);
+        void vscode.window.showErrorMessage(
+          `Failed to install shfmt ${s.version}. See "${OUTPUT_CHANNEL_NAME}" output for details.`,
+        );
+      }
+    }),
   );
 
   context.subscriptions.push(
-    vscode.commands.registerCommand(
-      "shellTidy.showShfmtInfo",
-      async () => {
-        output.show(true);
-        const resolved = await resolveAndLogShfmtInfo();
-        if (resolved) {
-          void vscode.window.showInformationMessage(
-            `${OUTPUT_CHANNEL_NAME} shfmt: ${resolved.source} (${resolved.executablePath})`,
-          );
-        } else {
-          void vscode.window.showErrorMessage(
-            `Unable to resolve shfmt. Configure "shellTidy.executablePath" or enable auto-download. See "${OUTPUT_CHANNEL_NAME}" output for details.`,
-          );
-        }
-      },
-    ),
+    vscode.commands.registerCommand("shellTidy.showShfmtInfo", async () => {
+      output.show(true);
+      const resolved = await resolveAndLogShfmtInfo();
+      if (resolved) {
+        void vscode.window.showInformationMessage(
+          `${OUTPUT_CHANNEL_NAME} shfmt: ${resolved.source} (${resolved.executablePath})`,
+        );
+      } else {
+        void vscode.window.showErrorMessage(
+          `Unable to resolve shfmt. Configure "shellTidy.executablePath" or enable auto-download. See "${OUTPUT_CHANNEL_NAME}" output for details.`,
+        );
+      }
+    }),
   );
 
   // Prewarm a managed shfmt in the background if it's the only possible source.
