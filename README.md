@@ -30,7 +30,7 @@
 </p>
 
 > [!NOTE]
-> `Shell Formatter` is currently in alpha (`0.1.0-alpha.1`). Settings and behavior may still evolve.
+> `Shell Formatter` is currently at `0.1.0`.
 
 ## Get It on VS Code Marketplace
 

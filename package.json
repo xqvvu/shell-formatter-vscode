@@ -2,7 +2,7 @@
   "name": "shell-formatter-vscode",
   "displayName": "Shell Formatter",
   "publisher": "xqvvu",
-  "version": "0.1.0-alpha.1",
+  "version": "0.1.0",
   "description": "A formatter for shell scripts, Dockerfile, gitignore, dotenv, /etc/hosts, jvmoptions, and other file types",
   "main": "dist/index.cjs",
   "type": "module",
