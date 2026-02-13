@@ -153,3 +153,8 @@ vite.config.ts.timestamp-*
 
 # Built Visual Studio Code Extensions
 *.vsix
+
+# MISC
+.DS_Store
+.idea
+.history

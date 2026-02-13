@@ -9,6 +9,7 @@
   "categories": [
     "Formatters"
   ],
+  "icon": "assets/icon.png",
   "activationEvents": [
     "onLanguage:shellscript",
     "onLanguage:dotenv",
@@ -210,7 +211,11 @@
     "name": "Ryo",
     "url": "https://github.com/xqvvu"
   },
-  "repository": "github:xqvvu/shell-formatter-vscode",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xqvvu/shell-formatter-vscode",
+    "directory": "shell-formatter-vscode"
+  },
   "homepage": "https://github.com/xqvvu/shell-formatter-vscode#readme",
   "readme": "https://github.com/xqvvu/shell-formatter-vscode#readme",
   "bugs": "https://github.com/xqvvu/shell-formatter-vscode/issues",
@@ -228,7 +233,7 @@
     "test:watch": "vitest",
     "check:biome": "biome check --no-errors-on-unmatched --write .",
     "check:types": "tsc --noEmit",
-    "prepackage": "pnpm run check:types && pnpm run build",
+    "prepackage": "pnpm run -s check:types && pnpm run -s build",
     "package": "vsce package --out shell-formatter.vsix",
     "postinstall": "lefthook install"
   },
