@@ -1,5 +1,16 @@
 # shell-tidy-vscode
 
+## 1.1.0
+
+### Minor Changes
+
+- Add optional `.editorconfig` integration for shfmt arguments.
+
+  - Add `shellTidy.respectEditorConfig` to resolve shfmt-related keys from `.editorconfig`.
+  - Add `shellTidy.editorConfigApplyIgnore` to pass `--apply-ignore` during formatting.
+  - Map resolved EditorConfig keys such as `indent_style`, `indent_size`, and `shell_variant` to shfmt flags.
+  - Keep `shellTidy.args` as the highest-precedence source when flags conflict.
+
 ## 1.0.1
 
 ### Patch Changes

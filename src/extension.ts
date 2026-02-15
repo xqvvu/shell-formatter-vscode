@@ -22,6 +22,8 @@ export function activate(context: vscode.ExtensionContext) {
       executablePathSetting: s.executablePath,
       autoDownload: s.autoDownload,
       args: s.args,
+      respectEditorConfig: s.respectEditorConfig,
+      editorConfigApplyIgnore: s.editorConfigApplyIgnore,
       enabledLanguages: s.enabledLanguages,
       logLevel: s.logLevel,
     };
@@ -55,6 +57,8 @@ export function activate(context: vscode.ExtensionContext) {
         executablePathSetting: s.executablePathSetting,
         autoDownload: s.autoDownload,
         args: s.args,
+        respectEditorConfig: s.respectEditorConfig,
+        editorConfigApplyIgnore: s.editorConfigApplyIgnore,
         logLevel: s.logLevel,
       };
     },

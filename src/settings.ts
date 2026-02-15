@@ -27,6 +27,8 @@ export interface ShellFormatSettings {
   enabledLanguages: string[];
   autoDownload: boolean;
   shfmtVersionOverride: string | null;
+  respectEditorConfig: boolean;
+  editorConfigApplyIgnore: boolean;
   logLevel: LogLevel;
 }
 
@@ -41,6 +43,11 @@ export function readSettings(): ShellFormatSettings {
 
   const autoDownload = cfg.get<boolean>("autoDownload", true);
   const shfmtVersionOverride = cfg.get<string | null>("shfmt.version", null);
+  const respectEditorConfig = cfg.get<boolean>("respectEditorConfig", false);
+  const editorConfigApplyIgnore = cfg.get<boolean>(
+    "editorConfigApplyIgnore",
+    false,
+  );
   const logLevel = cfg.get<LogLevel>("logLevel", "info");
 
   return {
@@ -51,6 +58,8 @@ export function readSettings(): ShellFormatSettings {
       : [...DEFAULT_ENABLED_LANGUAGES],
     autoDownload,
     shfmtVersionOverride: normalizeOptionalString(shfmtVersionOverride),
+    respectEditorConfig,
+    editorConfigApplyIgnore,
     logLevel,
   };
 }

@@ -39,3 +39,84 @@ describe("buildShfmtArgs fixture matrix", () => {
     });
   }
 });
+
+describe("buildShfmtArgs editorconfig integration", () => {
+  it("applies editorconfig flags and filename context", () => {
+    const actual = buildShfmtArgs({
+      baseArgs: [],
+      document: {
+        languageId: "shellscript",
+        fileName: "/repo/demo.sh",
+        uriScheme: "file",
+      },
+      formatting: { insertSpaces: true, tabSize: 2 },
+      respectEditorConfig: true,
+      editorConfigApplyIgnore: true,
+      editorConfig: {
+        indentStyle: "space",
+        indentSize: 4,
+        shellVariant: "bash",
+        binaryNextLine: true,
+        keepPadding: true,
+      },
+    });
+
+    expect(actual).toEqual([
+      "--filename=/repo/demo.sh",
+      "--apply-ignore",
+      "-i=4",
+      "-ln=bash",
+      "-bn",
+      "-kp",
+    ]);
+  });
+
+  it("prefers explicit shellTidy.args over editorconfig", () => {
+    const warnings: string[] = [];
+    const actual = buildShfmtArgs({
+      baseArgs: ["-i=8", "-ln=mksh", "-bn"],
+      document: {
+        languageId: "shellscript",
+        fileName: "/repo/demo.sh",
+        uriScheme: "file",
+      },
+      formatting: { insertSpaces: true, tabSize: 2 },
+      respectEditorConfig: true,
+      editorConfig: {
+        indentStyle: "space",
+        indentSize: 2,
+        shellVariant: "bash",
+        binaryNextLine: true,
+      },
+      onWarning: (line) => warnings.push(line),
+    });
+
+    expect(actual).toEqual([
+      "-i=8",
+      "-ln=mksh",
+      "-bn",
+      "--filename=/repo/demo.sh",
+    ]);
+    expect(warnings).toEqual([
+      "EditorConfig indent settings were ignored because shellTidy.args already set an indent flag.",
+      "EditorConfig shell_variant was ignored because shellTidy.args already set -ln/--ln.",
+      "EditorConfig binary_next_line was ignored because shellTidy.args already set -bn.",
+    ]);
+  });
+
+  it("does not add filename flags for untitled documents", () => {
+    const actual = buildShfmtArgs({
+      baseArgs: [],
+      document: {
+        languageId: "shellscript",
+        fileName: "Untitled-1",
+        uriScheme: "untitled",
+      },
+      formatting: { insertSpaces: true, tabSize: 2 },
+      respectEditorConfig: true,
+      editorConfigApplyIgnore: true,
+    });
+
+    expect(actual).toEqual(["-i=2"]);
+  });
+});

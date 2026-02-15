@@ -29,9 +29,6 @@
   </a>
 </p>
 
-> [!NOTE]
-> `Shell Tidy` is currently at `0.1.0`.
-
 ## Get It on VS Code Marketplace
 
 Install from Marketplace:
@@ -52,6 +49,7 @@ code --install-extension shell-tidy.vsix
   - falls back to `shfmt` on your `PATH`
   - auto-downloads a managed `shfmt` binary (optional)
 - Honors editor indentation (`editor.tabSize`) unless `-i` is already set in args.
+- Optional `.editorconfig` integration via `editorconfig` package.
 - Automatically injects `--ln=bats` for `.bats` files when needed.
 - Surfaces formatter errors in Diagnostics and Output panel.
 
@@ -103,6 +101,8 @@ Optional: set Shell Tidy as default for shellscript:
 | `shellTidy.autoDownload` | `boolean` | `true` | Auto-download managed `shfmt` when not found |
 | `shellTidy.shfmt.version` | `string \| null` | `null` | Override managed `shfmt` version (built-in default is `3.12.0`) |
 | `shellTidy.args` | `string[]` | `[]` | Extra args passed to `shfmt` |
+| `shellTidy.respectEditorConfig` | `boolean` | `false` | Resolve `.editorconfig` and map shfmt-related keys to flags |
+| `shellTidy.editorConfigApplyIgnore` | `boolean` | `false` | When EditorConfig mode is enabled, pass `--apply-ignore` |
 | `shellTidy.enabledLanguages` | `string[]` | Built-in language list | Language IDs to register formatter for |
 | `shellTidy.logLevel` | `"info" \| "debug"` | `"info"` | Controls Output panel verbosity |
 
@@ -114,6 +114,8 @@ Example:
   "shellTidy.executablePath": null,
   "shellTidy.shfmt.version": null,
   "shellTidy.args": ["-mn"],
+  "shellTidy.respectEditorConfig": false,
+  "shellTidy.editorConfigApplyIgnore": false,
   "shellTidy.logLevel": "info",
   "shellTidy.enabledLanguages": [
     "shellscript",
@@ -129,6 +131,27 @@ Example:
   ]
 }
 ```
+
+When `shellTidy.respectEditorConfig` is enabled, effective precedence is:
+
+1. `shellTidy.args`
+2. `.editorconfig` mapped keys
+3. VS Code formatting options (`editor.insertSpaces` / `editor.tabSize`)
+
+Only local file-backed documents participate in `.editorconfig` resolution. Untitled/virtual documents skip `.editorconfig`.
+
+Mapped `.editorconfig` keys:
+
+| EditorConfig key | shfmt flag |
+| --- | --- |
+| `indent_style=tab` | `-i=0` |
+| `indent_style=space` + `indent_size=<n>` | `-i=<n>` |
+| `shell_variant=<name>` | `-ln=<name>` |
+| `binary_next_line=true` | `-bn` |
+| `switch_case_indent=true` | `-ci` |
+| `space_redirects=true` | `-sr` |
+| `keep_padding=true` | `-kp` |
+| `function_next_line=true` | `-fn` |
 
 ## How `shfmt` Is Resolved
 

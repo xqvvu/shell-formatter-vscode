@@ -2,7 +2,7 @@
   "name": "shell-tidy-vscode",
   "displayName": "Shell Tidy",
   "publisher": "xqvvu",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Format shell and shell-like command text files with shfmt",
   "main": "dist/index.cjs",
   "type": "module",
@@ -171,6 +171,16 @@
           },
           "markdownDescription": "Extra arguments passed to `shfmt`."
         },
+        "shellTidy.respectEditorConfig": {
+          "type": "boolean",
+          "default": false,
+          "markdownDescription": "When enabled, Shell Tidy resolves `.editorconfig` and maps shfmt-related keys (such as `indent_style`, `indent_size`, and `shell_variant`) into shfmt flags."
+        },
+        "shellTidy.editorConfigApplyIgnore": {
+          "type": "boolean",
+          "default": false,
+          "markdownDescription": "When `shellTidy.respectEditorConfig` is enabled, also pass `--apply-ignore` so EditorConfig `ignore` rules are honored during formatting."
+        },
         "shellTidy.enabledLanguages": {
           "type": "array",
           "default": [
@@ -224,7 +234,7 @@
   "engines": {
     "node": ">=22",
     "pnpm": "10.x",
-    "vscode": "^1.109.0"
+    "vscode": "^1.80.0"
   },
   "scripts": {
     "build": "tsdown",
@@ -243,8 +253,9 @@
     "@changesets/changelog-github": "0.5.2",
     "@changesets/cli": "^2.29.8",
     "@types/node": "^22.19.11",
-    "@types/vscode": "^1.109.0",
+    "@types/vscode": "^1.80.0",
     "@vscode/vsce": "3.7.1",
+    "editorconfig": "^3.0.1",
     "lefthook": "^2.1.1",
     "ovsx": "0.10.9",
     "tsdown": "^0.20.3",

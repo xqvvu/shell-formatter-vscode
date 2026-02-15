@@ -1,4 +1,5 @@
 import * as vscode from "vscode";
+import { resolveEditorConfigForShfmt } from "@/editorconfig";
 import { normalizeEolForDocument } from "@/eol";
 import { buildShfmtArgs } from "@/shfmt-args";
 import type { ShfmtManager } from "@/shfmt-manager";
@@ -15,6 +16,8 @@ export class ShellFormatProvider
       executablePathSetting: string | null;
       autoDownload: boolean;
       args: string[];
+      respectEditorConfig: boolean;
+      editorConfigApplyIgnore: boolean;
       logLevel: "info" | "debug";
     },
     private readonly log: (line: string) => void,
@@ -34,10 +37,21 @@ export class ShellFormatProvider
       autoDownload: settings.autoDownload,
     });
 
+    const editorConfig = await resolveEditorConfigForShfmt({
+      enabled: settings.respectEditorConfig,
+      fileName: document.fileName,
+      uriScheme: document.uri.scheme,
+      log: settings.logLevel === "debug" ? (line) => this.log(line) : undefined,
+    });
+
     const args = buildShfmtArgs({
       baseArgs: settings.args,
       document,
       formatting: options,
+      respectEditorConfig: settings.respectEditorConfig,
+      editorConfigApplyIgnore: settings.editorConfigApplyIgnore,
+      editorConfig,
+      onWarning: (line) => this.log(line),
     });
 
     if (settings.logLevel === "debug") {
